@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  *
- * @author rommel
+ * @author Andrea Romanello
  */
 public class ProvaSorting {
 
