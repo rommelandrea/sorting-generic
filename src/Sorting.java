@@ -2,7 +2,7 @@
 import java.util.Random;
 import java.lang.Comparable.*;
 
-/*
+/**
  * Esercitazione 7
  */
 /**
@@ -13,8 +13,26 @@ import java.lang.Comparable.*;
  */
 public class Sorting {
 
-    public final int SOGLIA = 50;
+    public static final int SOGLIA = 50;
     private static Random generatore;
+
+    private static void iSort(int a[], int inf, int sup) {
+        for (int i = inf+1; i <= sup; i++) {
+            while (i > inf && a[i - 1] > a[i]) {
+                ArrayUtil.scambia(a, i - 1, i);
+                i--;
+            }
+        }
+    }
+
+    private static <T extends Comparable<T>> void iSort(T a[], int inf, int sup) {
+        for (int i = inf+1; i < sup; i++) {
+            while (i > inf && (a[i - 1].compareTo(a[i]) > 0)) {
+                ArrayUtil.scambia(a, i - 1, i);
+                i--;
+            }
+        }
+    }
 
     private static <T extends Comparable<T>> void qs(T a[], int inf, int sup) {
         int i, j;
@@ -38,9 +56,15 @@ public class Sorting {
                 }
             } while (i <= j);
 
-            qs(a, inf, j);
-
-            qs(a, i, sup);
+            if(j-inf>SOGLIA)
+                qs(a, inf, j);
+            else
+                iSort(a, inf, j);
+            
+            if(sup-i > SOGLIA)
+                qs(a, i, sup);
+            else
+                iSort(a, i, sup);
 
         }
     }
@@ -67,15 +91,25 @@ public class Sorting {
                 }
             } while (i <= j);
 
-            qs(a, inf, j);
-
-            qs(a, i, sup);
+            if(j-inf>SOGLIA)
+                qs(a, inf, j);
+            else
+                iSort(a, inf, j);
+            
+            if(sup-i > SOGLIA)
+                qs(a, i, sup);
+            else
+                iSort(a, i, sup);
 
         }
     }
 
     public static <T extends Comparable<T>> void qsort(T[] a) {
-        qs(a, 0, a.length - 1);
+        if(a.length > SOGLIA)
+            qs(a, 0, a.length - 1);
+        else
+            iSort(a, 0, a.length-1);
+            
     }
 
     public static void qsort(int[] a) {
@@ -89,16 +123,16 @@ public class Sorting {
         int a[] = ArrayUtil.randomIntArray(20, 20);
         Integer b[] = ArrayUtil.randomIntegerArray(20, 20);
 
-        for (int i = 0; i < b.length; i++) {
-            System.out.println(b[i]);
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
         }
 
-        qsort(b);
+        iSort(a, 0, b.length-1);
 
 
         System.out.println("\nstampo l'array ordinato");
-        for (int i = 0; i < b.length; i++) {
-            System.out.println(b[i]);
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
         }
     }
 }
