@@ -8,8 +8,8 @@ import java.util.Scanner;
  * Esercitazione 7
  * funzioni per la creazione di array casuali
  */
+
 /**
- *
  * @author Andrea Romanello
  * @version 0.1
  */
