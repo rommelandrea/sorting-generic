@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Random;
 import java.lang.Comparable.*;
 
@@ -17,7 +18,7 @@ public class Sorting {
     private static Random generatore;
 
     private static void iSort(int a[], int inf, int sup) {
-        for (int i = inf+1; i <= sup; i++) {
+        for (int i = inf + 1; i <= sup; i++) {
             while (i > inf && a[i - 1] > a[i]) {
                 ArrayUtil.scambia(a, i - 1, i);
                 i--;
@@ -26,7 +27,7 @@ public class Sorting {
     }
 
     private static <T extends Comparable<T>> void iSort(T a[], int inf, int sup) {
-        for (int i = inf+1; i < sup; i++) {
+        for (int i = inf + 1; i <= sup; i++) {
             while (i > inf && (a[i - 1].compareTo(a[i]) > 0)) {
                 ArrayUtil.scambia(a, i - 1, i);
                 i--;
@@ -56,15 +57,17 @@ public class Sorting {
                 }
             } while (i <= j);
 
-            if(j-inf>SOGLIA)
+            if (j - inf > SOGLIA) {
                 qs(a, inf, j);
-            else
+            } else {
                 iSort(a, inf, j);
-            
-            if(sup-i > SOGLIA)
+            }
+
+            if (sup - i > SOGLIA) {
                 qs(a, i, sup);
-            else
+            } else {
                 iSort(a, i, sup);
+            }
 
         }
     }
@@ -91,48 +94,78 @@ public class Sorting {
                 }
             } while (i <= j);
 
-            if(j-inf>SOGLIA)
+            if (j - inf > SOGLIA) {
                 qs(a, inf, j);
-            else
+            } else {
                 iSort(a, inf, j);
-            
-            if(sup-i > SOGLIA)
+            }
+
+            if (sup - i > SOGLIA) {
                 qs(a, i, sup);
-            else
+            } else {
                 iSort(a, i, sup);
+            }
 
         }
     }
 
     public static <T extends Comparable<T>> void qsort(T[] a) {
-        if(a.length > SOGLIA)
+        if (a.length > SOGLIA) {
             qs(a, 0, a.length - 1);
-        else
-            iSort(a, 0, a.length-1);
-            
+        } else {
+            iSort(a, 0, a.length - 1);
+        }
+
     }
 
     public static void qsort(int[] a) {
-        qs(a, 0, a.length - 1);
+        if (a.length > SOGLIA) {
+            qs(a, 0, a.length - 1);
+        } else {
+            iSort(a, 0, a.length - 1);
+        }
+    }
+
+    public static <T extends Comparable<T>> boolean isSorted(T[] a) {
+        for (int i = 1; i < a.length; i++) {
+            if (a[i - 1].compareTo(a[i]) > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean isSorted(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            if (a[i-1] > a[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        int a[] = ArrayUtil.randomIntArray(20, 20);
-        Integer b[] = ArrayUtil.randomIntegerArray(20, 20);
+    public static void main(String[] args) throws IOException {
+        int a[] = RandomArrays.randomIntArray(20, 20);
+        Integer b[] = RandomArrays.randomIntegerArray(20, 20);
+        Double c[] = RandomArrays.randomDoubleArray(20, 20);
+        String d[] = RandomArrays.randomStringArray(100, 5);
 
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
+        //ArrayUtil.stampa(d);
 
-        iSort(a, 0, b.length-1);
+        qsort(d);
+        System.out.println("elemento 0: "+d[0]);
 
-
-        System.out.println("\nstampo l'array ordinato");
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
+        //System.out.println("\nstampo l'array ordinato");
+        //ArrayUtil.stampa(d);
+        
+        if(isSorted(d))
+            System.out.println("l'array è ordinato");
+        else
+            System.out.println("l'array NON è ordinato");
     }
 }
